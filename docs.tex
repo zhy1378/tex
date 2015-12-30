@@ -1,0 +1,168 @@
+\chapter{开发说明}
+
+\section{综述}
+开发
+
+接口数据
+
+\subsection{Flash动画修改}
+\subsubsection{开发目的}
+修改7个Flash动画，当
+
+\subsubsection{开发环境}
+修改Flash动画只有一种技术可供选择，也就是使用Adobe官方的开发工具。
+
+\begin{enumerate}
+\item 操作系统：Win7
+\item IDE：Adobe Flash Professional CS5
+\end{enumerate}
+
+\chapter{服务端开发}
+服务端的功能包括：
+\begin{enumerate}
+\item 接收和处理中控命令。
+\item 接收和处理刷卡器命令。
+\item 播放Flash动画。
+\end{enumerate}
+
+\section{开发环境}
+\begin{enumerate}
+\item 操作系统：Win7
+\item IDE：Adobe Flash Builder
+\end{enumerate}
+
+\section{开发要点}
+\subsection{WebSocket支持}
+WebSocket是2011年发布的协议，比较新。而Adobe在2012之后已经不再更新Flash Builder。所以，Adobe官方并不支持WebSocket。
+
+经过搜索，我选择了AIRServer。
+
+但是，官方的AIRServer缺乏某些功能，故此本项目中使用的AIRServer是经过我修改的。
+
+\subsection{全屏播放}
+这个功能的实现破费周折。
+
+\subsection{内嵌文件或外部文件}
+AIR支持
+
+\subsection{传递参数}
+这里的“参数”，指的是从播放器传递到动画中的参数。
+
+起初，参数总是传递不进去。后来发现，不是语句写的有问题。
+
+
+\subsection{播放完毕}
+很遗憾的是，SWFLoader并没有一个事件是在Flash播放完毕后触发。故此，只能设置一个Timer，不停的检查currentFrame和totalFrames。发现播放完毕之后，释放SWFLoader的资源，并显示图片。
+
+
+
+
+
+Flash 中的问题：
+1. 城市2，最末尾的时候，显示的Logo是“正普”而不是“新开普”。
+2. 校园1，198～239帧，玻璃图显示在读卡器前面，导致读卡器时间无法被读到。
+这里的问题是：有时候玻璃在读卡器前面，有时候在后面。
+
+
+修改Flash 流程：
+
+\subsection{版本转换}
+原始的Flash动画是用Flash Professional CS4制作的，使用的Flash Player 9。必须将其转变为CS5版本，并使用Flash Player 10，否则无法使用一些类和功能，比如DateTimeFormatter。
+
+\subsection{寻找正确的元件和层}
+只有将文本框放置在正确的层上，才能跟随动画而变动。没有很特别的技巧，需要极大的耐心。
+
+\subsection{转变图形为MovieClip}
+将对应的舞台元件转变为MovieClip并命名。
+
+Flash Professional中的Library中的元件相当于一个Class，每个放在Stage上的元件相当于Class的Instance。对于一个MovieClip的元件来说，还需要在Stage上点击这个元件，并将其设为MovieClip型。也就是说，Flash Professional允许一个MovieClip的Instance不是MovieClip。
+
+这是一个折磨我许久的问题。起初，我思想上将元件库里的元件视为Instance，也不知道需要改变Instance的类型，因此导致元件上附带的AS3无法正常运行。
+
+\subsection{随机性}
+在刷卡机没有传入数据的情况下，我做了一个随机效果，每次播放的动画会产生一些随机数据，以此保障动画显示的文本更富有变化。涉及的字段如下：
+
+client.client\_id = 4位随机数
+user.user\_id = 6位随机数
+card.card\_id = 7位随机数
+record.record\_id = 9位随机数
+人名：七个常见姓“张王李赵陈刘杨”加上七个常见字“阳刚东鑫勇伟宇”，随机产生。
+
+\subsection{Label和TextField}
+如果想在Flash中显示文本，可以用Label或者TextField、TextArea。
+
+如果在Frame上直接附加AS3，则只能import有限的包，有些包是不准使用的，其中就包括Label所在的flash.controls.*包。这也是个很奇怪的现象，因为在Stage上可以放入Label，却无法在Frame附带的AS3上插入。
+
+另外，如果在Stage上插入文本后，将其修改为动态文本（Dynamic Text），它就以TextField的形式出现。故此，使用TextField更加方便。
+
+\subsection{反锯齿}
+动画中添加的文本框有一个选项：
+
+静态文本（Static Text）是可以自动反锯齿的，所以
+
+Flash有一个Bug（或者说功能缺陷），不会动态生成具有反锯齿效果的文字。所以，动态文字必须预先存储为图形格式。注意，如果关闭反锯齿效果，文字在动画播放中会变得异常丑陋。
+
+如果将字体中的全部字符集转变为图形，就会导致swf文件过大且严重影响效率。我试着把“微软雅黑”整个嵌入到swf中，结果在我的配置良好的台式机上都花了3秒钟的时间才打开。故此，仅仅将必须的文字转变为图片是唯一的技术选择。
+
+目前swf文件中预先嵌入的字体为：
+1. 英文大小写
+2. 数字
+3. 英文标点
+4. 拉丁字符
+5. 以下汉字
+
+ 流水号：，。￥…（）《》？交易终端时间卡类型用户科目额账余状态成功失败门已开付款不足禁止进入拒绝考勤登录总星期一二三四五六七八九十百千万零负老人学生普通金融自主缴费电助早餐午晚扣除小区便利店张王李赵陈刘杨阳刚东鑫勇伟宇公车票出租煤气共元请
+
+用户名中如果出现了不在上述文字序列的汉字，就会无法正常显示。故此，我故意在文字显示中拿掉了“用户名”字段。
+
+\subsection{其它限制}
+“校园就餐刷卡”动画中，价格只能是不超过两位整数+两位小数的形式。
+“公交车票”中，价格只能是1.00元
+“出租车费”中，价格只能是16元
+
+
+\chapter{网页版中控}
+\section{开发目标}
+一个界面程序，安装在手机或者Pad上，用来控制动画的播放。
+
+\section{开发要点}
+\subsection{地址存储}
+服务器地址存储在cookie中，如果用文件的方式打开，则cookie可能无法使用。本地文件（local file）是否可以访问cookie，是由浏览器的安全机制决定的，每个浏览器都可能有不同的设置。默认的，本地文件的cookie在Chrome和FireFox中是无法使用的，所以如果打开本地文件的网页，则不可能存储服务器地址。
+
+这种情况下，最好的解决方案是，固定服务器地址，然后在网页中写死。
+
+或者，我建议在服务器上安装Apache服务器，将网页通过Apache发布，即可存储服务器地址。
+
+新开普公司有一个展厅，
+
+动画一共有9个，但是只有7个需要修改。原始
+
+工控机用分屏器接到
+
+\chapter{保留缩写}
+保留缩写意味着，这些缩写极为常见，故此仅仅作为特定的单词缩写用。
+\begin{description}
+\item[id] identification  唯一识别符，如果用了id，那么就潜在的意味着这个字段是非空且唯一的。
+\item[nr]  number 数字
+\item[msg] message 信息
+\item[o, obj] object 对象
+\item[json] JSON - JavaScript Object Notation
+\item[b, bool] boolean 布尔型
+\item[i, int] integer 整数
+\item[e] Exception 异常。有三个常用单词都是以e开头，即error, event, exception，
+\item[s, \textbf{str}] String 字符串
+\item[a, ary] array
+
+\end{description}
+
+
+
+中控的开发选择网页版中控的主要原因是追求通用性。
+
+\section{开发环境}
+\begin{description}
+\item[操作系统] Win7
+\item[IDE] PhpStorm 7.1.3
+\end{description}
+
+

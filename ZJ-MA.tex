@@ -1,0 +1,67 @@
+\documentclass[12pt, A4]{report}
+\input{_settings}
+\input{/Users/zhy1378/projects/latex/OK_Style}
+\input{/Users/zhy1378/projects/latex/OK_Title}
+
+\usepackage[a4paper]{geometry}
+\usepackage{listings}
+\usepackage[ampersand]{easylist}
+\usepackage{amssymb}
+%\ListProperties(Hide=100, Hang=true, Progressive=3ex, Style*=-- ,Style2*=$\bullet$ ,Style3*=$\circ$ ,Style4*=\tiny$\blacksquare$ )
+\definecolor{light-gray}{gray}{0.97}
+\lstset{
+	frame=single,
+	breaklines=true,
+	backgroundcolor=\color{light-gray},
+	tabsize=2,
+	basicstyle=\ttfamily
+}
+
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+
+\usepackage{pdfpages}
+\usepackage{CJK}
+\usepackage{longtable}
+
+\begin{document}
+	%\input{"D:/doc/Projects/latex/OK_Simple_Title"}
+	%\input{FlashInteraction}
+	\zMakeTitle{Full}
+	\input{declaration}
+	\input{abstract}
+	
+	\newpage
+	{\tableofcontents}
+	\clearpage
+	
+	% ----------------------------------------------------
+	% --- frontmatter: List of Figures (not mandatory) ---
+	% ----------------------------------------------------
+	%\newpage
+	%\addcontentsline{toc}{section}{Image index}
+	%\ohead[]{\rightmark}
+	%\listoffigures
+	
+	%\newpage
+	%\addcontentsline{toc}{section}{Table index}
+	%\ohead[]{\rightmark}
+	%\listoftables
+	
+	
+	\input{introduction}
+	%\input{glossary}
+	\input{problem_statement}
+	\input{methodology}
+	\input{implementation}
+	\input{evaluation}
+	\input{conclusion}
+	%\input{attachments}
+	%\input{backup}
+	%\input{references}
+	\newpage
+	\renewcommand{\bibname}{References}
+	\bibliography{references}
+	\bibliographystyle{plain}
+\end{document}
