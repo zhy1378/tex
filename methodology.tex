@@ -18,18 +18,24 @@ This section will describe the principle of related network protocols.
 
 \textbf{OSI}, \textit{Open System Interconnect}, is a reference model, which is developed by ISO and CCITT, providing the framework of a functional structure for telecommunication systems or computing systems. It is established from low to high: Physical Layer, Data Link Layer, Network Layer, Transport Layer, Session Layer, Presentation Layer and Application Layer.
 
-\textbf{TCP/IP} is a set of communication protocols, using to implement a network interconnection. It is the kernel for Internet network architecture. The reference model is divided into four levels, these were: Host-to-Network Layer, Internet Layer, Transport layer and the Application layer.  
+\begin{figure}[!ht]
+	\caption{OSI model.}
+	\includegraphics[width=\textwidth]{images/osi_model}
+\end{figure}
 
-Reference Model Comparison  
+\textbf{TCP/IP} is a set of communication protocols, using to implement a network interconnection. It is the kernel for Internet network architecture in\cite{rfc1213}. The reference model is divided into four levels, these were: Host-to-Network Layer, Internet Layer, Transport layer and the Application layer.  
 
-The common attributes:  
+\subsubsection{Reference Model Comparison}
+
+The common attributes:
 
 \begin{itemize}
 	\item OSI reference model and TCP / IP reference models use the structure of hierarchy.  
 	\item Both of them provide connection-oriented service and connectionless service.  
 \end{itemize}
 
-The different attributes: 
+The different attributes(see also the table below): 
+
 \begin{itemize}
 	\item OSI use seven-layer model, but TCP / IP is a four-layer structure.  
 	\item Host-to-Network Layer is actually no real definition in TCP / IP reference model, has just some conceptual descriptions. But OSI reference model is not only divided the two layer (Physical Layer and Data Link Layer), but also are very detailed in the function of each layer.  
@@ -37,15 +43,36 @@ The different attributes:
 	\item The concept of OSI reference model is the clear structure, but is too complex. TCP / IP reference model is not clear on the services, interfaces and the difference of protocols. 
 \end{itemize}
 
+\begin{table}[h]
+\begin{longtable}{| c | p{8em} | c | p{12em} |}
+\hline
+\textbf{OSI} & \textbf{Protocol data unit} & \textbf{TCP/IP} & \textbf{TCP/IP protocols} \\ \hline
+Application & Data & Application & TFTP, HTTP, SNMP, FTP, SMTP, DNS, Telnet, etc. \\ \hline
+Presentation & Data &  & No agreement \\ \hline
+Session & Data & & No agreement \\ \hline
+Transport & Segment (TCP)/ Datagram (UDP) & Transport & TCP, UDP \\ \hline
+Network & Packet & Internet & IP, ICMP, OSPF, EIGRP, IGMP \\ \hline
+Data link & Frame & Host-to-Network & SLIP,CSLIP, PPP,MTU \\ \cline{1-2} \cline{4-4}
+Physical & Bit & & ISO2110, IEEE802, IEEE802.2\\
+\hline
+\end{longtable}
+\caption{Protocols refer to OSI and TCP/IP layers}
+\end{table}
+
 \subsection{SNMP (Simple Network Management Protocol)}
 
 \subsubsection{Overview}
 
 As the network scale increases, it becomes more difficult for network administrators to monitor the status of all devices in a short timeline, to discover and repair the fault.  
 
-SNMP is short term for Simple Network Management Protocol, SNMP is defined as the application protocol for the management services on network. For the first time in August 1988 defined by the Internet Engineering Task Force (IETF) research team in order to solve the problems with the Internet router administration. Soon it reached a formal standard in RFC1157. SNMP is composed of a series of protocols and specifications, which provide a method for collecting network management information from devices on the network. It collects data from managed devices in two ways: First is polling (polling-only) method, and the second is the interrupt-based approach. These protocols are supported by many typical network devices such as routers, hubs, bridges, switches, servers, workstations, printers, modem and other network components and devices.  
+SNMP is short term for Simple Network Management Protocol, SNMP is defined as the application protocol for the management services on network. For the first time in August 1988 defined by the Internet Engineering Task Force (IETF) research team in order to solve the problems with the Internet router administration. Soon it reached a formal standard in RFC1157\cite{rfc1157}. SNMP is composed of a series of protocols and specifications, which provide a method for collecting network management information from devices on the network. It collects data from managed devices in two ways: First is polling (polling-only) method, and the second is the interrupt-based approach. These protocols are supported by many typical network devices such as routers, hubs, bridges, switches, servers, workstations, printers, modem and other network components and devices.
 
 All SNMP messages is received via UDP port 161, only Trap information using UDP port 162.
+
+\begin{figure}[!ht]
+	\caption{SNMP communication principles diagram}
+	\includegraphics[width=\textwidth]{images/SNMP_communication_principles_diagram}
+\end{figure}
 
 \subsubsection{SNMP Network Architecture}
 
@@ -64,16 +91,22 @@ After Agent receives request information from NMS, it completes the query or mod
 
 \paragraph{MIB}
 
-Any managed resource can be represented as an object, called the managed object. MIB is a collection of managed objects. It defines a set of properties for managed objects: Object name, object access permissions and object data types, etc.  
+Any managed resource can be represented as an object, called the managed object. MIB in\cite{rfc1493}\cite{rfc4188} is a collection of managed objects. It defines a set of properties for managed objects: Object name, object access permissions and object data types, etc.  
+
 Each Agent has its own MIB. MIB also can be seen as an interface between the NMS and the Agent, through this interface, NMS can make 'read' or 'write' operations to each managed object in Agent, in order to achieve the purpose of managing and monitoring devices.  
 
-MIB stores data within a tree structure. The node of the tree represents a managed object, it can use a path starting from the root to uniquely identify, and this path is called OID. 
+MIB stores data within a tree structure. The node of the tree represents a managed object, it can use a path starting from the root to uniquely identify, and this path is called OID.
+
+\begin{figure}[!ht]
+	\caption{MIB-II subtree. This figure show the tree structure of MIB.}
+	\includegraphics[width=\textwidth]{images/MIBsubtree}
+\end{figure}
 
 \subsubsection{SNMP Version}
 
 \paragraph{SNMPv1}
 
-\textit{SNMPv1} is the initial version of the SNMP，providing minimal network management capabilities. The SNMPv1's SMI and MIB are almost insecure, due to a large number of security vulnerabilities.  
+\textit{SNMPv1} is the initial version of the SNMP, providing minimal network management capabilities. The SNMPv1's SMI and MIB are almost insecure, due to a large number of security vulnerabilities.  
 SNMPv1 uses community names for authentication. The characteristic of community names like a password to restrict the access to the Agent of the NMS. If SNMP packets with community names have not been approved in the NMS or Agent, the packets will be discarded.  
 
 \paragraph{SNMPv2}
@@ -88,8 +121,10 @@ SNMPv1 uses community names for authentication. The characteristic of community 
 \paragraph{SNMPv3}
 
 \textit{SNMPv3} has been enhanced primarily in terms of security, it uses USM und VACM technology.  
-USM provides authentication and encryption capabilities, USM introduces the concept of user names and groups, set the authentication and encryption features.  
-VACM determine the user, whether is allowed access, specific MIB objects and access method, VACM technology defines five elements: the group, security level, contexts, MIB view, access policy, these elements control access privileges, it decides whether the user is allowed for access.
+
+\textbf{USM}(\textit{User-based Security Model}) provides authentication and encryption capabilities, \textit{USM} introduces the concept of user names and groups, set the authentication and encryption features.  
+
+\textbf{VACM}(\textit{View-based Access Control Model}) determine the user, whether is allowed access, specific MIB objects and access method, \textit{VACM} technology defines five elements: the group, security level, contexts, MIB view, access policy, these elements control access privileges, it decides whether the user is allowed for access.
 
 \subsubsection{SNMP Operations}
 
@@ -107,7 +142,7 @@ When performing the first four operations, the device uses the UDP protocol in p
 
 \subsubsection{SNMP Technical advantages}
 
-\textit{SNMP} has the following technical advantages:  
+\textit{SNMP} has the following technical advantages\footnote{Definition and Explanation about SNMP: \url{https://www.techopedia.com/definition/5473/simple-network-management-protocol-snmp}}:  
 
 \begin{itemize}
 	\item Based on the standard protocol TCP / IP, transport layer generally use UDP (User Datagram Protocol).  
@@ -132,7 +167,7 @@ When performing the first four operations, the device uses the UDP protocol in p
 
 Speaking of the \textit{MAC address}, we have to speak about IP address (see the next section).
 
-To complete the communication，IP addresses working on the network layer, the packet is forwarded from one network to another network; MAC addresses are based on the data link layer, a frame is transmitted from one node to another one in the same link. In a stable network, IP addresses and MAC addresses are a pair. So IP addresses and MAC addresses are corresponding to each other. This mapping between IP addresses and MAC addresses has to be done by the \textit{ARP} (\textit{Address Resolution Protocol}).  
+To complete the communication, IP addresses working on the network layer, the packet is forwarded from one network to another network; MAC addresses are based on the data link layer, a frame is transmitted from one node to another one in the same link. In a stable network, IP addresses and MAC addresses are a pair. So IP addresses and MAC addresses are corresponding to each other. This mapping between IP addresses and MAC addresses has to be done by the \textit{ARP} (\textit{Address Resolution Protocol}).  
 
 The difference between the MAC address and IP address:  
 
@@ -151,7 +186,7 @@ The same with MAC address and IP address is sole (meaning?), but the different c
 
 \subsubsection{IPv4 vs. IPv6}
 
-\textit{IPv4}, Internet Protocol version 4 (IPv4) is the fourth version of the Internet Protocol (IP) ，It is also the first to be used widely, which is the basis of protocol in the current Internet. In 1981, Jon Postel defined the IP in RFC791.  
+\textit{IPv4}, Internet Protocol version 4 (IPv4) is the fourth version of the Internet Protocol (IP), It is also the first to be used widely, which is the basis of protocol in the current Internet. In 1981, Jon Postel defined the IP in RFC791.  
 
 IPv4 runs on a variety of the bottom network. In local area network, an Ethernet used it most commonly. But its biggest problem is the limited place of network address.  
 
@@ -183,10 +218,20 @@ IP address according to different network ID is divided into five types, A class
 
 A, B, C class is uniformly distributed Internet NIC in worldwide, D class and E class are the special addresses.  
 
-%TODO table text
-(See below table) A, B, C (table or text?)
-
 Class D is to be called multicast address.
+
+\begin{table}[h]
+\begin{longtable}{| p{4em} | p{6em} | p{6em} | p{7em} | p{9em} |}
+\hline
+\textbf{category} & \textbf{The maximum number of network} & \textbf{IP address range} & \textbf{The maximum number of hosts} & \textbf{Private IP address range} \\ \hline
+A & 126($ 2^7-2 $) & 0.0.0.0-127.255.255.255 & 16777214 & 10.0.0.0-10.255.255.255 \\ \hline
+B & 16384($ 2^{14} $) & 128.0.0.0-191.255.255.255 & 65534 & 172.16.0.0-172.31.255.255 \\ \hline
+C & 2097152($ 2^{21} $) & 192.0.0.0-223.255.255.255 & 254 & 192.168.0.0-192.168.255.255 \\ \hline 
+\end{longtable}
+\caption{Categories of IP address}
+\end{table}
+
+
 
 Special addresses are listed below:
 
@@ -202,7 +247,7 @@ In a LAN or WLAN, there are two special IP addresses, a network number and a bro
 
 \subsection{HTTP}
 
-\textbf{HTTP} is \textit{HyperText Transfer Protocol}，which is the most widely used network protocol on the Internet. All WWW documents must comply with this standard. Original HTTP was designed to provide a method to publish and receive HTML pages. World Wide Web Consortium and the Internet Engineering Task Force cooperatively researched and released a series of RFC, including the famous RFC 2616 for the definition of the HTTP 1.1.   
+\textbf{HTTP} is \textit{HyperText Transfer Protocol}, which is the most widely used network protocol on the Internet. All WWW documents must comply with this standard. Original HTTP was designed to provide a method to publish and receive HTML pages. World Wide Web Consortium and the Internet Engineering Task Force cooperatively researched and released a series of RFC, including the famous RFC 2616 for the definition of the HTTP 1.1.   
 
 HTTP uses a request - response model in the client-server computing model. After a client establishes a connection to a server, it sends a request to the server, the format of the request method is Uniform resource identifier(URI) and protocol version. The server receives the request, then give the response information. Its format is a status line, including protocol version and a code of success or error. The returned information from server is received by client, it is displayed on the user's screen through the browser. Afterwards aborts the connection.
 
@@ -257,7 +302,7 @@ The switch manages the data transmission between the multiple ports at simultane
 
 \subsubsection{AP}
 
-\textbf{AP}, \textit{Access Point}, AP is equivalent to a bridge between wired network and wireless network, using the main technology of the 802.11x series. Its main task is to connect each client of wireless network together, and then it is connected to the Ethernet. AP used mainly for home broadband, company-internal network, large buildings and Campus Network, etc. The distance coverage of wireless ranges from tens of meters to hundreds of meters.  
+\textbf{AP}, \textit{Access Point}, AP is equivalent to a bridge between wired network and wireless network, using the main technology of the 802.11x series in \cite{rfc5416}\cite{Siddhartha2002} . Its main task is to connect each client of wireless network together, and then it is connected to the Ethernet. AP used mainly for home broadband, company-internal network, large buildings and Campus Network, etc. The distance coverage of wireless ranges from tens of meters to hundreds of meters.  
 
 Functions: 
 
@@ -273,25 +318,36 @@ Repeater could be considered as an signal strength reinforcement device.
 \subsection{Devices used in the thesis}
 
 \subsubsection{ProCurve switch}
+The ProCurve Series Switches are multi-port switches that can be used to build high-performance switched workgroup networks. These switches are store-and-forward devices that offer low latency for high-speed networking.
+
+The ProCurve switch has an option: Hide its IP address on network. When it is activated, no IP will be assigned to it. But even when this option is deactivated, its IP address can not be found some times.
 
 \subsubsection{ASUS RT-N16}
+\textit{ASUS RT-N16} is Multi-Functional Gigabit Wireless N Router with USB storage,printer and media server. Powerful CPU provides a high-performance throughput. It could be used as a router, a repeater or an AP.
+
+A disadvantage of \textit{ASUS RT-N16} is that, all the media interfaces of this device has the same MAC address and media interface. It's special setting of ASUS router, so there is no way to distinguish the media interface.
 
 \subsubsection{Convert Macintosh Computer to Router}
 
-The operation system running on Macintosh computers names OS X, based on FreeBSD, 
+Because that lack of network devices, two Macintosh computers are converted to SNMP supported routers.
 
-Because that lack of network devices, two Macintosh computers are converted to routers that support SNMP.
+The operating system running on Macintosh computers names OS X, based on FreeBSD. It is also an Unix-like operating system. A Macintosh computer with an OS X system could be converted to a router, if corresponding software are installed and configured.
+
+\paragraph{Activate Internet share}
+At the \textit{System preference} of OS X (Tested on OS X 10.11, El Capitan), the \textit{Internet share} could be activated. 
+
+\textit{IP forwarding}, also called \textit{Internet routing} is a process used to determine which path a packet or datagram can be sent. While activating, the \textit{net.inet.ip.forwarding} ks set to 1 automatically, and it will be reset to 0 when deactivated.
 
 \paragraph{Launch SNMP service}
 
-The configuration of SNMP is stored in /etc/snmp/snmp.conf
+The configuration of SNMP is stored in \textit{/etc/snmp/snmp.conf}.
 
 Step 1. Backup the /etc/snmp/snmp.conf file.
 
-Step 2. Modify the /etc/snmp/snmp.conf file:
+Step 2. Modify the /etc/snmp/snmp.conf file: \footnote{How to activate SNMP on Mac OS \url{http://kb.paessler.com/en/topic/41843-how-do-i-activate-snmp-on-mac-os-in-order-to-monitor-it-with-prtg}}\footnote{SNMP unter Mac OS X 10.8 Mountain Lion aktivieren \url{https://blog.emeidi.com/2013/06/09/snmp-unter-mac-os-x-10-8-mountain-lion-aktivieren/}}
 
 \begin{lstlisting}[language=bash]
-sudo nano /etc/snmp/snmpd.conf
+sudo vim /etc/snmp/snmpd.conf
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
@@ -314,23 +370,20 @@ sysName SystemName
 sysobjectid 1.3.6.1.4.1.8072.3.2.16
 \end{lstlisting}
 
+Step 3. Launch SNMP service.
+
 \begin{lstlisting}[language=bash]
 $ sudo launchctl load -w /System/Library/LaunchDaemons/org.net-snmp.snmpd.plist
 \end{lstlisting}
 
 This command line will activate the SNMP service in Macintosh computer.
 
+After that, test it using command 
+\begin{lstlisting}{language=bash, caption={Run snmpwalk on localhost computer}}
+snmpwalk -v 2c -c public localhost
+\end{lstlisting}
 
-
-\footnote{\url{http://kb.paessler.com/en/topic/41843-how-do-i-activate-snmp-on-mac-os-in-order-to-monitor-it-with-prtg}}
-
-\subsection{ASUS RT-N16}
-
-ASUS router is a mutli role router. It could be used as a router, a repeater or an AP.
-
-\subsubsection{Mac as router}
-
-A Macintosh computer with an OS X system could be converted to a router, if corresponding software are installed and configured.
+If the SNMP service is launched successfully, it will list all informations in SNMP.
 
 \section{Redirection}
 
@@ -344,20 +397,18 @@ The iptables could also be used to configure the \textit{Network Address Transla
 
 \subsection{PF}
 
-\textbf{PF} means \textit{Packet Filter}, is added to FreeBSD since 5.3. PF is a full-featured and complete firewall that has optional support for ALTQ (Alternate Queuing), which provides Quality of Service.\footnote{\url{https://www.freebsd.org/doc/handbook/firewalls-pf.html}}
-
-By an original FreeBSD system, 
-
-
-This command will load the configuration from 
-
+\textbf{PF} means \textit{Packet Filter}, is added to FreeBSD since 5.3. PF is a full-featured and complete firewall that has optional support for ALTQ (Alternate Queuing), which provides Quality of Service.\footnote{PF official website: \url{https://www.freebsd.org/doc/handbook/firewalls-pf.html}}
 \footnote{pf.conf manual page in Mac Developer Library: \url{https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man5/pf.conf.5.html}}
 
 \footnote{PF and PFCTL in FreeBSD official website:\\ 
 	PFCTL: \url{https://www.freebsd.org/cgi/man.cgi?query=pfctl&sektion=8\\}
 	PF: \url{https://www.freebsd.org/cgi/man.cgi?query=pf&sektion=4}}
 
-\subsubsection{flush}
+\textbf{PFCTL} means \textit{Packet Filter ConTroLler}, is used to control the \textit{Packet Filter}. It has a lot of parameters and functions, but this thesis does not require them all. The necessary functions are listed below:
+
+\subsubsection{Flush}
+
+This will flush the loaded rules from PF.
 
 \begin{lstlisting}
 pfctl -F <modifier>
@@ -366,14 +417,6 @@ pfctl -F <modifier>
 There are nine possible modifiers: \textit{nat}, \textit{queue}, \textit{rules}, \textit{states}, \textit{Sources}, \textit{info}, \textit{Tables}, \textit{osfp} and \textit{all}. Actually, the \textit{PFCTL} in this project redirection uses only the \textit{nat} modifier, \textit{pfctl -F nat} will flush all the NAT rules, and the other rules will remain.
 
 But for simple, only the \textit{pfctl -F all} is used, to flush all the rules.
-
-\subsubsection{Load rules}
-
-The rules of \textit{pf} could be stored in a configuration file. By default, the file is \textit{/etc/pf.conf}. The following command will load the rules:
-
-\begin{lstlisting}
-pfctl -f <configuration file>
-\end{lstlisting}
 
 \subsubsection{Enable / Disable}
 Package filter could be disabled, using the following command:
@@ -387,3 +430,31 @@ or enable it using the following command:
 pfctl -e
 \end{lstlisting}
 
+\subsubsection{Load rules}
+
+The rules of \textit{pf} could be stored in a configuration file. By default, the file is \textit{/etc/pf.conf}. The following command will load the rules:
+
+\begin{lstlisting}
+pfctl -f <configuration file>
+\end{lstlisting}
+
+The \textit{configuration file} could be another PF configuration file \textit{shells/pf.conf} contains the rules about redirection. 
+
+\begin{lstlisting}[caption={Sample of pf.conf}]
+bridge_if = "bridge100"
+server_ip = "192.168.2.1"
+protos = "{tcp}"
+rdr on $bridge_if inet proto $protos from any to any port 80 -> $server_ip port 80
+\end{lstlisting}
+
+\textit{bridge\_if} is the name of bridge interface of Macintosh computer. When \textit{Internet share} is activated, a virtual media interface will be created. This is the \textit{bridge} between two real network interfaces.
+
+\textit{server\_ip} is the target of redirection.
+
+\textit{protos} is abbreviation of \textit{protocols}. Only the packet of corresponding protocols will be redirected.
+
+\textit{rdr} controls the redirection.
+
+\section{Flooding Algorithm}
+
+\textit{Flooding algorithm} is used to locate the client device, it will find out the direct connected device of the client. The core of \textit{Flooding algorithm} is quit simple: the whole network has a root device, which will be queried first. If the target client device is connected to it, the locating process is over, the result will be returned and shown to the client. Otherwise, the \textit{LoYiW} process will query all the sub devices of the root device one by one recursively, until the client device is found or all the sub devices have been queried.

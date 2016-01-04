@@ -13,7 +13,7 @@ This thesis could be extended to several directions in the future:
 
 \subsection{Delay}
 
-Due to the difference of equipment leads to the delay in application, when a user roams from one AP to the next AP. Using the SNMP Trap might solve this problem, because managed device will send actively the notification to SNMP manager, instead of waiting for the SNMP manager to poll again. When the connection state changed, it should provide a real-time information for user. Further study is, how SNMP traps and the MAC-to-IP address mapping can be used together for supporting push services of early warning.
+Due to the difference of equipment leads to the delay in application, when a user roams from one AP to the next AP. Using the SNMP Trap might solve this problem, because managed device will send actively the notification to SNMP manager, instead of waiting for the SNMP manager to poll again. When the connection state changed, it should provide a real-time information in\cite{CISCOSystems2006} for user. Further study is, how SNMP traps and the MAC-to-IP address mapping can be used together for supporting push services of early warning.
 
 \subsection{Administration GUI}
 
@@ -24,6 +24,11 @@ In the case, working with Django as the server, it offers a Web Service interfac
 \subsection{Client GUI}
 
 Since there is no a determined escape scene, User page shows MAC address and IP address of the connected AP in the form of text. When the indoor environment is determined, a graphical floor plan can mark out the current position and exit. A good client GUI should be intuitive and can automatically adapt to different screen resolutions.
+
+\subsection{Specified Device}
+The devices tested in this thesis are not specified for locating service. That is a reason why the signal strength is quite weak ( the Android mobile phone connects to Macintosh router disconnected frequently), the IP address of ProCurve switch can not be found sometimes, there is no way to distinguish the media interfaces of ASUS RT-N16, it costs long time to refresh the state of router, etc. If some specified routers are offered, the developing and testing process would be much faster, and a further goal could be reached.
+
+The subnet of a router can not be visited from outside for now, but this problem could be solved using a special router. If a request-response service could be installed on this router, it will return the topology map of the subnet while requesting. This service might remain small and will not increase the costs too much. 
 
 \subsection{Security}
 
