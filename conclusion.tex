@@ -1,2 +1,32 @@
 \newpage
 \chapter{Conclusion}
+
+\section{Overview}
+
+Because of the high speed access, larger coverage and simple installation, Wi-Fi technology and WLAN technology are widely used, recently it has become an important part of life. The demand for location-based services grows rapidly. Wireless positioning technology is also increasingly concerned and applied to the various industries, the development of the positioning based on the Wireless technology is possible and necessary.
+
+The first chapter of this thesis introduces the purpose and significance. The second chapter, problem statement, describes some of the current indoor positioning technology. The third chapter is the method of design and implementation for the application. The next chapter presents the implementation of application, though the MAC-to-IP address mapping, the network device of supporting SNMP finds the AP or wireless router, which directly is connected to a Mobile device of user. In case of an emergency, forwarding is turned on, the user's browser is redirected to a specified page.  It also includes a graphical interface for management. The following chapter describes that the application run on the network device and result analysis.
+
+\section{Future works}
+
+This thesis could be extended to several directions in the future:
+
+\subsection{Delay}
+
+Due to the difference of equipment leads to the delay in application, when a user roams from one AP to the next AP. Using the SNMP Trap might solve this problem, because managed device will send actively the notification to SNMP manager, instead of waiting for the SNMP manager to poll again. When the connection state changed, it should provide a real-time information for user. Further study is, how SNMP traps and the MAC-to-IP address mapping can be used together for supporting push services of early warning.
+
+\subsection{Administration GUI}
+
+Improve the management administration GUI, allows the administrator to manage the new added device easily and optimize remote management capability.
+
+In the case, working with Django as the server, it offers a Web Service interface for remote manipulating operations.
+
+\subsection{Client GUI}
+
+Since there is no a determined escape scene, User page shows MAC address and IP address of the connected AP in the form of text. When the indoor environment is determined, a graphical floor plan can mark out the current position and exit. A good client GUI should be intuitive and can automatically adapt to different screen resolutions.
+
+\subsection{Security}
+
+There are no security measures concurrently in this project. But for a practical use, security is definitive necessary. For example, a hacker who want to make prank may create panic in the people, or the terrorists could control the system and guide the LoYiW users to a danger zone.
+
+SNMP supports \textit{SNMPsec} (Secure SNMP), shell command could be invoked using \textit{SSH}(Secure SHell ), so it's possible to implement the secure measures.

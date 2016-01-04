@@ -1,245 +1,83 @@
 \newpage
 \chapter{Problem Statement}
 
-遇到的难题
-
-\section{Definition of Terms}
-
-\subsection{Network Protocols}
-
-\subsubsection{SNMP (Simple Network Management Protocol)}
-
-\textbf{Overview}
-
-As the network scale increases, it becomes more difficult for network administrators to monitor the status of all devices in a short timeline, to discover and repair the fault.  
-
-SNMP is short term for Simple Network Management Protocol, SNMP is defined as the application protocol for the management services on network. For the first time in August 1988 defined by the Internet Engineering Task Force (IETF) research team in order to solve the problems with the Internet router administration. Soon it reached a formal standard in RFC1157. SNMP is composed of a series of protocols and specifications, which provide a method for collecting network management information from devices on the network. It collects data from managed devices in two ways: First is polling (polling-only) method, and the second is the interrupt-based approach. These protocols are supported by many typical network devices such as routers, hubs, bridges, switches, servers, workstations, printers, modem and other network components and devices.  
-
-All SNMP messages is received via UDP port 161, only Trap information using UDP port 162.
 
 
-\textbf{SNMP Network Architecture}(可以加入图分析)
+\section{Research state}
 
-SNMP network architecture consists of three parts: NMS, Agent and MIB.
+The discussion for the indoor positioning technology based on wireless technology
 
-\textbf{NMS}
-
-NMS is the network manager, takes usage of SNMP for network device management and monitoring system. NMS refers to a dedicated server for network management, it also refers to a device executed management functions of an application.  
-NMS can send a request to the Agent, select or modify one or more of the specific parameter values. At the same time, NMS can receive Trap information from Agent sends, in order to learn the current status of the managed devices.  
-
-\textbf{Agent}
-
-Agent is an application module of device in network, used to maintain the managed device information and to respond NMS's request, to report management data to the NMS, which sends the request.  
-
-After Agent receives request information from NMS, it completes the query or modify operation and sends the operation result to NMS, in order to complete the response. Meanwhile, when the device has malfunction or other event, Agent will send initiatively trap information to the NMS and notice the change of current status on device.  
-
-\textbf{MIB}
-
-Any managed resource can be represented as an object, called the managed object. MIB is a collection of managed objects. It defines a set of properties for managed objects: Object name, object access permissions and object data types, etc.  
-Each Agent has its own MIB. MIB also can be seen as an interface between the NMS and the Agent, through this interface, NMS can make 'read' or 'write' operations to each managed object in Agent, in order to achieve the purpose of managing and monitoring devices.  
-MIB stores data within a tree structure. The node of the tree represents a managed object, it can use a path starting from the root to uniquely identify, and this path is called OID. (可以加图解释)  
-
-\textbf{SNMP Version}
-
-\textbf{SNMPv1}
-
-SNMPv1 is the initial version of the SNMP，providing minimal network management capabilities. The SNMPv1's SMI and MIB are almost insecure, due to a large number of security vulnerabilities.  
-SNMPv1 uses community names for authentication. The characteristic of community names like a password to restrict the access to the Agent of the NMS. If SNMP packets with community names have not been approved in the NMS or Agent, the packets will be discarded.  
-
-SNMPv2
-
-SNMPv2 also uses community names for authentication. At the same time it is compatible with SNMPv1 and adds several features comparing to SNMPv1:  
-* It Provides more operation types (Get Bulk operations, etc.)
-* Support for the more data types (Counter32 etc.)
-* It Provides richer error codes, more details to analyse and distinguish error  
-
-SNMPv3
-
-SNMPv3 has been enhanced primarily in terms of security, it uses USM und VACM technology.  
-USM provides authentication and encryption capabilities, USM introduces the concept of user names and groups, set the authentication and encryption features.  
-VACM determine the user, whether is allowed access, specific MIB objects and access method, VACM technology defines five elements: the group, security level, contexts, MIB view, access policy, these elements control access privileges, it decides whether the user is allowed for access.
-
-SNMP Operations
-
-SNMP support for multiple operating, mainly for the following basic operations:
-
-\begin{description}
-	\item[Get] NMS use the operation to obtain one or more parameter values from the Agent.
-	\item[GetNext] NMS get to the next parameter value of one or more parameters from the Agent.
-	\item[Set] NMS set up one or more parameter values in the Agent.
-	\item[Response] Agent returns one or more parameter values. This action is in response to the preceding three operations.
-	\item[Trap] Agent sends actively the operation to inform the NMS, What happened.
-\end{description}
-
-When performing the first four operations, the device uses the UDP protocol in port 161 to send packets, when performing Trap operation, the device uses the UDP protocol in port 162 to send packets. Hence using a different port number, a device can act simultaneously as Agent and NMS.
-
-1.1.5 SNMP Technical advantages
-
-SNMP has the following technical advantages:  
-
-\begin{itemize}
-	\item Based on the standard protocol TCP / IP, transport layer generally use UDP (User Datagram Protocol).  
-	\item Automated Network Management. The network administrators can use SNMP on the network to retrieve information, modify information, find fault, complete fault diagnosis, plan capacity and report.  
-	\item Shield the physical differences in different device, to achieve automatic management of products from different vendors.  
-	\item SNMP provides only the most basic feature, which gives independence in the management tasks, physical properties of the managed devices and the actual network type, in order to achieve the management of devices for different vendors.  
-	\item SNMP have simple mode of request - response, active notification methods, timeout and retransmission mechanism.  
-	\item Less packet type, simple format of packet is easy to be resolved and to be implemented.  
-	\item SNMPv3 provides the security mechanisms of authentication and encryption, as well as the access control capabilities based on user and view, to enhance security.
-\end{itemize}
-
-\subsubsection{MAC Address}
-
-\textbf{MAC Address} means \textit{Media Access Control} or \textit{Medium Access Control}. Or it is called the physical address, hardware address, is used to define the location of network device. In the OSI model, the network layer (OSI Layer 3) is responsible for the IP address; the data link layer is responsible for the MAC address. Therefore, a media interface has a MAC address and an IP address in network. The network interface controller (NIC) determines the MAC address, and it is fixed. (Belongs to the device)  
-
-MAC address used hexadecimal digits separated by hyphens (-) or by colons (:) , a total of six bytes (48 bits). Actually MAC address is the adapter address or adapter identifier EUI-48. It is divided into the first three octets and the following three octets:  
-
-\begin{itemize}
-	\item The first three octets, is called Organizationally Unique Identifier, namely OUI. It is assigned to different manufacturers, which have registered in IEEE, to distinguish the devices of the different manufacturers.
-	\item The following three octets, is assigned by the manufacturers themselves, called Extended Identifier. For the same manufacturer, it is also different.
-\end{itemize}
+With the rapidly increase of data/multimedia service and the growing demand for positioning and navigation (especially in complex indoor environments, such as airports, exhibition halls, supermarkets, libraries, etc.) mobile terminals needs to be identified with indoor location information. But because of the restrictions of the positioning time, the positioning accuracy and complicated indoor environment, a relatively complete positioning technology is still unable to be used efficiently. A vast number of solutions of indoor positioning technologies were proposed by network experts.
 
 
-Speaking of the MAC address, we have to speak about IP address (see the next section).
+\subsection{Indoor GPS technology}
 
-To complete the communication，IP addresses working on the network layer, the packet is forwarded from one network to another network; MAC addresses are based on the data link layer, a frame is transmitted from one node to another one in the same link. In a stable network, IP addresses and MAC addresses are a pair. So IP addresses and MAC addresses are corresponding to each other. This mapping between IP addresses and MAC addresses has to be done by the ARP (Address Resolution Protocol).  
+GPS, \textit{Global Positioning System}, currently the widely spread positioning technology. When the GPS receiver used indoor, due to the influence of the building, the signal is greatly attenuated, so the positioning accuracy is poor. There is no method to get equal performance as the outdoor navigation with extraction of the navigation data and time information from the satellite broadcasting in a straight way. In order to obtain higher signal sensitivity, the residence time of the delay on each waypoint needs to be extended.   
 
-The difference between the MAC address and IP address:  
+A-GPS (Assisted GPS) technology offers the possibility to solve this problem. A-GPS is the convergence technology between GPS technology and the wireless cellular technology. The mobile terminal has not to download and decode the navigation data from the GPS satellites, receives directly the positioning information of the aid from the mobile network and there is no need to decode the timing measurement.
+The advantage of GPS is the wide and effective coverage and the accuracy of the positioning signal and navigation signal. The disadvantage of the GPS is the limitation by indoor usage and the high cost of the terminal.  
 
-The same with MAC address and IP address is sole (meaning?), but the different characteristics are:  
 
-\begin{itemize}
-	\item On the same device or a computer, the change and customisation of the IP address is easy (but it must be unique). The MAC address was made by the manufacturer, it generally cannot be changed.
-	\item Different length. The length of IP address is 32 bits, MAC address is 48 bits.
-	\item Different assignment rules. IP address based on the network topology, MAC address based on the manufacturer.
-	\item Different OSI layer for the addressing.
-\end{itemize}
+\subsection{Infrared positioning technology}
 
-\subsubsection{IP}
+The principle of \textit{infrared positioning technology} as another method, with an infrared beam sends the infrared radiation, positioning depends on the optical sensor, which receives the infrared radiation. While infrared has a relatively high positioning accuracy, but the light cannot pass through the obstacle, so that the infrared is only the sight propagation. The straight sight and the short transmission distance are the two major disadvantages of infrared positioning, it makes the poor effect of the positioning. When the infrared is blocked by pocket or wall, it will not work properly, so needs to install the receiving antenna in each room and corridor. The costs in total are higher. Therefore, the infrared method is only suitable for short-distance transmission, it has limitations on the precise positioning.  
 
-\textbf{IP} is the abbreviation for Internet Protocol, meaning "interconnection protocol between networks". In the Internet, it is a set of rules to make all devices, which are connected to the Internet network, compatible with each other for communication. The devices should comply with the rules. Any system manufacturers of a device, as long as it complies the IP, could be interconnected to the Internet. Because of IP, the Internet was able to have rapid development and became the world's largest open communication network.  
+\subsection{Ultrasonic positioning technology}
 
-\textbf{IPv4 vs. IPv6}
+\textit{Ultrasonic positioning technology} uses the mainly reflective odometry to determine the position of an object through triangulation algorithms. It is achieved by emitting ultrasonic waves and receiving the echoes from the measured object, according to the time difference between the echo and transmission wave, it is possible to determinate the distance with a sequential calculation. The ultrasonic positioning system consists of several transponders and a main rangefinder. With the main rangefinder targeting on the measured object, the computer command emits the radio signal of the same frequency to transponders in fixed locations. After transponders receive radio signals, ultrasonic signals were simultaneously transmitted to the main rangefinder to get the distance between the main rangefinder and each transponders. When three or more than three transponders aren’t in the same straight line, it is possible to calculate and determine the position of the object in the two-dimensional coordinate system. Ultrasonic Positioning has the higher positioning accuracy and simple structure, but ultrasound makes the great influence by multi-path effects and needs higher priced investment for the basic hardware facilities.    
 
-IPv4, Internet Protocol version 4 (IPv4) is the fourth version of the Internet Protocol (IP) ，It is also the first to be used widely, which is the basis of protocol in the current Internet. In 1981, Jon Postel defined the IP in RFC791.  
-IPv4 runs on a variety of the bottom network. In local area network, an Ethernet used it most commonly. But its biggest problem is the limited place of network address.  
-IPv6, Internet Protocol version 6 is the recent version of the Internet Protocol (IP). IPv6 is the next generation IP protocol, which was designed by IETF (Internet Engineering Task Force), to replace the current Internet Protocol version (IPv4).  
-Compared with IPV4, IPV6 has the following advantages:  
+\subsection{Bluetooth technology}
 
-\begin{itemize}
-	\item IPv6 has a larger space for IP address. The length of IPv4 address is 32 bit, that is $ 2^{32} - 1 $ addresses. IPv6 is 128 bit, has $2^{128} - 1 $ addresses.
-	\item IPv6 uses the smaller routing tables. The assignment of IPv6 address follows Aggregation principle. It makes the Router with a Entry record to represent lots of the subnet, in order to reduce the length of the routing table and improve the speed of packet forwarding in router.
-	\item IPv6 enhances the support of Multicast and Flow Control, greatly improving for Quality of Service (QoS).
-	\item IPv6 adds the support of the auto-configuration. This is an improvement and expansion of DHCP, to make the network (especially local area network) management more convenient and faster.
-	\item IPv6 has a higher level of security. Using IPv6, the users encrypt data at the network layer and check the IP packet.
-\end{itemize}
+\textit{Bluetooth technology} is a wireless transmission technology of short-distance and low-power consumption by measuring the signal strength for positioning. The appropriate Access Points of Bluetooth LAN have been installed, the network is configured to the connection mode of basic network based on a multi-user. The Access Points are always the master device in the piconet, it can obtain the user's location information. Bluetooth technology is mainly used in small-scale positioning, such as single hall or warehouse. The biggest advantage of Bluetooth technology is the small circuit, it is easy to integrate in PDA, PC and mobile phone, so it is easy to popularize for many adopters. In theory, as long as the Bluetooth device is turned on, it is possible to determine its position. On the other hand, the price of Bluetooth devices and equipment is higher (also it is unstable in complex environments with influence of noise frequencies).    
 
-\subsubsection{IP Address}
+\subsection{Radio frequency identification technology (RFID)}
 
-\textbf{IP} provides a uniform address format, named the Internet Protocol address. It assigns a logical address for each network and each host on the Internet, in order to mask the differences in the physical address. Each device in network needs to have an IP address for normal communication. Then the "IP address" is equivalent to "phone number", and the router acts as "program-controlled switch."  
+RFID technology uses radio frequency mode for the data exchange non¬-conductive and bidirectional communications, mainly purpose of identifying and positioning. Part of this technique is short distance transmission, usually a few metre. But it can obtain the information of the positioning accuracy within milliseconds, and the transmission range is large and low cost. The problems for the controversial and difficult research of RFID positioning technology are to establish the theoretical propagation model, the user's privacy and security aspects and international standardization.   
 
-An IP address is a 32-bit binary number; it is usually divided into four times "8-bit binary number"---four bytes. IP address is usually the dotted decimal notation, the form as (a.b.c.d), in which a, b, c, d is a decimal integer number from 0 to 255.  
+\subsection{Ultra-wideband technology}
 
-\textit{IP Address Type}
+Ultra-wideband technology is a new communication technology, which has huge differences with traditional communication technologies. It doesn’t need to use the Carrier in conventional communication systems, by the sending and receiving of ultra‐short pulses within nanosecond duration to transmit data in the GHz bandwidth. UWB systems compared to conventional narrowband systems, brings better penetration, lower power consumption, better resistance to multipath effects, more safety, lower system complexity and more precise positioning accuracy. Therefore, Ultra-wideband technology can be used for location tracking and indoor navigation for stationary or moving objects and people.    
 
-The type of IP address is composed of public address and private address.  
-The Internet NIC (Internet Network Information Center) is responsible for the public address. The IP address is assigned to the organizations, which will register or apply to the Inter NIC. It gains access directly to the Internet with it. Private address is a non-registered address, used exclusively for the internal organization.  
+\subsection{ZigBee technology}
 
-\textit{IP Address Classification}
+ZigBee is a new short-range and low-rate wireless network technology. It falls in between RFID and Bluetooth, and can also be used for indoor positioning. It has its own radio standards, with communication between thousands of tiny sensors with each other apportioned in different spots in order to achieve precise positioning. The energy demand of these sensors is very small, utilizing a relay way to transmit the data by radio waves from one sensor to another sensor, it increases the communication efficiency. The main significant technical features of ZigBee are low power consumption and low costs.    
 
-IP address according to different network ID is divided into five types, A class to - E class.  
+\subsection{Wi-Fi technology}
 
-A, B, C class is uniformly distributed Internet NIC in worldwide, D class and E class are the special addresses.  
+Wi-Fi is a wireless interconnection technology for PC, handheld devices and other mobile or stationary terminals. It is a trademark of wireless network communication technology, which belongs to the Wi-Fi Alliance. Hotspots are areas，where a wireless network (WLAN) is available，these access points to the Internet are installed mostly in bars, hotels, airports, train stations or even in public places. Any place, where people open the mobile terminal, can get free access to the Internet via Wi-Fi. For these reasons，Wi-Fi technology is a new platform for information collection that can implement the complex positioning, monitoring and tracking tasks in a wide range. The positioning of the network node is the basis and premise for most applications, using wireless LAN standards IEEE802.11. It is easy to install, less base stations and using the same structure in underlying wireless network.    
 
-(See below table) A, B, C (table or text?)
+Except the above-mentioned positioning technologies, which are available to public, as well as computer vision, optical tracking based on image analysis, magnetic field and military beacon, more technologies are still in the experimental stage.    
 
-Class D is to be called multicast address.
+\section{The purpose of the application in thesis}
+
+Due to the popularity of Wi-Fi, the application, which will be implemented in this thesis, is based on Wi-Fi and hotspot technology.  
+
+It´s developed as "Guidance system" for mobile devices to evacuate people from buildings. The application runs on mobile terminal without any additional software or APP, requires only the web browser. In case of an emergency, the web page through HTTP Redirect technology opens a navigation page. The following paragraphs focus on positioning in the Wi-Fi environment. There are several methods as location information in Wi-Fi environment.
+
+
+\subsection{IP address}  
+
+The IP address of device is automatically distributed through DHCP to connect to AP. If the IP address is used in the different address segment by any APs, it can determine the IP address area of the AP for the terminal. According to the different IP address, the connected AP can be found.   
+
+\subsubsection{Advantages}
   
-Special address
+No installation of additional software and hardware required. It is suitable for the web application.    
 
-\begin{itemize}
-	\item Each byte is 0 ("0.0.0.0"), corresponding to the current host
-	\item Each byte is 1 ("255.255.255.255"), corresponding to the broadcast address of current subnet
-	\item IP addresses cannot be a decimal "127" at the beginning, from 127.0.0.1 to 127.255.255.255 for the Loop Test. Such as: 127.0.0.1 represents the local IP address, using the "http://127.0.0.1" to test the configuration of the Web server in machine
-\end{itemize}
+\subsubsection{Disadvantage}
 
-\textit{IP Address in LAN or WLAN}
+In fact, the installation process of the wireless network has a lot of possibilities, it is no universal and feasible method, using only the IP address to find the connected AP. Because in the mobile IP mechanism, the device might remain the same IP address in the different AP area. In this situation, the connected AP cannot be determined by device, we need to get the Care-of address for better adjustment as well.   
 
-In a LAN or WLAN, there are two special IP addresses, a network number and a broadcast address. Network number is the address for addressing, which represents the whole network itself; another is the broadcast address, which represents all of the host network. Network number is the first IP address in the segment, broadcast address is the last IP address in the segment, and these two addresses are not configured on the host. For example, in this segment 192.168.0.0,Subnet Mask is 255.255.255.0, Network number is 192.168.0.0, and the broadcast address is 192.168.0.255. Host IP address can be configured only from 192.168.0.1 to 192.168.0.254.  
+\subsection{Signal strength of the communication between the device and AP}
 
-\subsubsection{HTTP}
+By the described principle of triangulation the position is detected with three different points, makes a use of triangular geometry to determine the position and the distance. Wireless Triangulation is a method for determining the location of wireless nodes with IEEE 802.11 standards. Usually it is implemented by measuring the received signal strength (RSS). Because of the multipath effects of the signal it is impossible to determine the accurate position, and it needs to calculate three individual signal strengths of the different AP.     
 
-\textbf{HTTP} is \textit{HyperText Transfer Protocol}，which is the most widely used network protocol on the Internet. All WWW documents must comply with this standard. Original HTTP was designed to provide a method to publish and receive HTML pages. World Wide Web Consortium and the Internet Engineering Task Force cooperatively researched and released a series of RFC, including the famous RFC 2616 for the definition of the HTTP 1.1.   
+\subsection{Authentication of the user}
 
-HTTP uses a request - response model in the client-server computing model. After a client establishes a connection to a server, it sends a request to the server, the format of the request method is Uniform resource identifier(URI) and protocol version. The server receives the request, then give the response information. Its format is a status line, including protocol version and a code of success or error. The returned information from server is received by client, it is displayed on the user's screen through the browser. Afterwards aborts the connection.
+In many public Wi-Fi hotspots users need to authenticate before log in to the Internet, based on the centralized RADIUS server or IEEE 802.1X and providing centralized authentication, authorization, and accounting for the network access. The mobile device sends an authentication request to an AP, then it forwards the request to the RADIUS server. Further information such as the time, the AP's ID and the MAC address of the mobile device are stored in the RADIUS server to determine information, which AP a mobile device is currently associated with. Therefore, the method of the RADIUS depends on the RADIUS server and other protocols. It is only suitable for the use of authentication WLAN, and it is not suggested for web application because the MAC address of mobile device being recorded in RADIUS server.        
 
-\subsubsection{DHCP}
-\textbf{DHCP}, \textit{Dynamic Host Configuration Protocol} is a local area network protocol; typically it is used in large-scale local area network environment. The concentrated management and assignment of the IP address is the main task, to verify that the host can get a dynamic IP address, Gateway address, DNS server address and other relevant information, and enhance the utilization of the IP address.  
+In summary, for indoor environment, a IEEE802.11 WLAN mainly consists of one or more Access Points (AP) to provide the wireless access service. Usually any mobile device connects to the AP with the strongest signal and the shortest distance.
 
-DHCP protocol uses a client - server model, it has three mechanisms for the assignment of IP address:
+Since the AP has been previously placed in a fixed location, it is possible to specify the location of the mobile device based on current information of the AP, which is connected to the mobile device. 
 
-\begin{description}
-	\item[Automatic Allocation] DHCP server allocates a permanent IP address for the host.
-	\item[Dynamic Allocation] DHCP server allocates the IP address with time limited for the host, as time expires, it can be used by other hosts.
-	\item[Manual Allocation] DHCP server allocates the IP address by the network administrator for the host.
-\end{description}
+And I found that most of the current network devices with SNMP technology. This thesis presents the application based on web mode with combination of the WLAN technology and SNMP technology, using the location of AP to determine the position of the user's mobile device for sending the escape instructions.
 
-DHCP uses UDP as a transport protocol. The host sends a request message to the DHCP server in 67 port, DHCP server gets the response to the host's 68 port.
-
-\subsubsection{ICMP}
-
-\textbf{ICMP}, \textit{Internet Control Message Protocol}, is a connection-oriented protocol, it was used between hosts and routers to deliver control messages, including the reporting errors, the exchange limited control and status information.  
-
-The main functions of ICMP are listed below:
-
-\begin{itemize}
-	\item Detect the remote host, if it exists.  
-	\item Establishment and maintenance of the routing information.  
-	\item ICMP Redirect  
-	\item Flow Control
-\end{itemize}
-
-\textit{ping} and \textit{traceroute} are the most common commands based on ICMP. 
-
-\subsubsection{OSI}
-
-\textbf{OSI}, \textit{Open System Interconnect}, is a reference model, which is developed by ISO and CCITT, providing the framework of a functional structure for telecommunication systems or computing systems. It is established from low to high: Physical Layer, Data Link Layer, Network Layer, Transport Layer, Session Layer, Presentation Layer and Application Layer.
-
-
-
-\subsubsection{TCP/IP}  
-
-\textbf{TCP/IP} is a set of communication protocols, using to implement a network interconnection. It is the kernel for Internet network architecture. The reference model is divided into four levels, these were: Host-to-Network Layer, Internet Layer, Transport layer and the Application layer.  
-
-Reference Model Comparison  
-
-The common attributes:  
-*	OSI reference model and TCP / IP reference models use the structure of hierarchy.  
-*	Both of them provide connection-oriented service and connectionless service.  
-
-The different attributes:  
-*	OSI use seven-layer model, but TCP / IP is a four-layer structure.  
-*	Host-to-Network Layer is actually no real definition in TCP / IP reference model, has just some conceptual descriptions. But OSI reference model is not only divided the two layer (Physical Layer and Data Link Layer), but also are very detailed in the function of each layer.  
-*	OSI model is designed before any protocols were developed, so it has universality. TCP / IP model has first the set of protocols, after that it built the model, so it does not apply to non-TCP / IP networks.  
-*	The concept of OSI reference model is the clear structure, but is too complex. TCP / IP reference model is not clear on the services, interfaces and the difference of protocols.  
-
-\subsection{Network Devices}
-
-\subsubsection{Switch}
-
-Switch, provides the exclusive path of the electrical signal, which connects to the switch, for any two nodes in network. The most common is the Ethernet switch.  
-
-The switch works in the second layer (Data Link Layer) of the OSI reference model. The CPU of switch forms a MAC table  through the MAC address and the corresponding port, when each port on the switch is successfully connected. In the communication, it sends to the packet for the MAC address only by its corresponding port, instead of all ports.  
-
-The switch makes the data transmission between the multiple ports at the same time. Each port can be regarded as a separate physical network segment, the network devices, which connect to the switch, use the the bandwidth alone, without the other devices to share. 
-
-\subsubsection{AP}
-
-\textbf{AP}, \textit{Access Point}, AP is equivalent to a bridge between wired network and wireless network, using the main technology of the 802.11x series. Its main task is to connect each client of wireless network together, and then it is connected to the Ethernet. AP used mainly for home broadband, company-internal network, large buildings and Campus Network, etc. The distance coverage of wireless ranges from tens of meters to hundreds of meters.  
-
-Functions: 
-
-\begin{description}
-	\item[Repeat] It improves the wireless signal amplification between two wireless APs, such that the remote client can receive a stronger wireless signal.  
-	\item[Bridge] two Communication endpoints are connected by two wireless APs for data transmission. For example, usually it is selected by the AP as bridge for the communication of two wired LANs.  
-	\item[Master-slave mode] it allows one point connection to multipoint for the management of sub-network.  
-\end{description}

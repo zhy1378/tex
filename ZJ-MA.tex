@@ -1,7 +1,9 @@
 \documentclass[12pt, A4]{report}
 \input{_settings}
-\input{/Users/zhy1378/projects/latex/OK_Style}
-\input{/Users/zhy1378/projects/latex/OK_Title}
+\newcommand*{\zLatexPath}{../../../latex}
+\input{\zLatexPath/OK_Style.tex}
+\input{\zLatexPath/OK_Title}
+\input{\zLatexPath/json_style}
 
 \usepackage[a4paper]{geometry}
 \usepackage{listings}
@@ -26,7 +28,6 @@
 \usepackage{longtable}
 
 \begin{document}
-	%\input{"D:/doc/Projects/latex/OK_Simple_Title"}
 	%\input{FlashInteraction}
 	\zMakeTitle{Full}
 	\input{declaration}
