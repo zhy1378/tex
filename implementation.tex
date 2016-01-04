@@ -248,7 +248,7 @@ The \textit{config.json} file should also be configured, it contains two importa
 
 \subsubsection{Convert MAC and IP string to integer}
 
-In the algorithm should do a lot of MAC address and IP address comparison, but the string format of MAC and IP is not proper for comparison. For example, the MAC address has several formats: uppercase string (0:1C:2E:E:AA:0), lowercase string (0:1c:2e:e:aa:0), with leading zero ( 00:1c:2e:0e:aa:00) or without leading zero ( ), separated by colon(:) or minus(-). That's why it shall be converted to an integer.
+In the \textit{Flooding algorithm} should do a lot of MAC address and IP address comparison, but the string format of MAC and IP is not proper for comparison. For example, the MAC address has several formats: uppercase string (0:1C:2E:E:AA:0), lowercase string (0:1c:2e:e:aa:0), with leading zero ( 00:1c:2e:0e:aa:00) or without leading zero, separated by colon(:) or minus(-). That's why it shall be converted to an integer.
 
 The int type of Python is 64 digits, so it is enough to contain the 48 digits MAC address.
 
@@ -262,7 +262,7 @@ The MAC-device-dict is a dict object, using MAC as the key and device as the val
 
 \subsubsection{Generate structure of network topology}
 
-The devices are stored as list, but the actual network should be organized as a tree, that's why it shall be converted to another topology structure.
+The devices are stored as a list, but the actual network should be organized as a tree, that's why it shall be converted to another topology structure.
 
 \subsubsection{Query}
 
